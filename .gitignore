@@ -1,0 +1,14 @@
+# runtime data & secrets
+data/
+certbot/
+.env
+*.db
+*.pyc
+__pycache__/
+*.log
+
+# backup archives
+*.tar
+*.tar.gz
+*.zip
+mysql_dump.sql

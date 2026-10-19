@@ -1,0 +1,32 @@
+{
+  "name": "kg-qa-ie-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173"
+  },
+  "dependencies": {
+    "3d-force-graph": "^1.73.4",
+    "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.7.7",
+    "echarts": "^6.1.0",
+    "element-plus": "^2.8.7",
+    "force-graph": "^1.51.4",
+    "katex": "^0.16.11",
+    "markdown-it": "^14.1.0",
+    "markdown-it-footnote": "^4.0.0",
+    "pinia": "^2.2.6",
+    "three": "^0.169.0",
+    "three-spritetext": "^1.10.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.4.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.5",
+    "sass-embedded": "^1.80.6",
+    "vite": "^5.4.10"
+  }
+}
