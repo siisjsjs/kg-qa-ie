@@ -59,7 +59,7 @@ kg-qa-ie 提供「材料入库 → 结构化抽取 → 混合检索 → 问答/�
 
 ```
 .
-├── backend/                 后端源码
+├── backend/                 后端源码（完整可构建）
 │   ├── app/
 │   │   ├── api/v1/          路由（auth / wiki / ingestion / graph / admin / conversations ...）
 │   │   ├── core/            配置、数据库、安全、crypto
@@ -77,6 +77,10 @@ kg-qa-ie 提供「材料入库 → 结构化抽取 → 混合检索 → 问答/�
 │   │   │   └── admin/ status/ conversations/
 │   │   └── main.py
 │   ├── migrations/          Alembic 迁移
+│   ├── scripts/             开发/运维脚本（冒烟、校验、清理等）
+│   ├── tests/               pytest 用例（unit / integration / regression）
+│   ├── Dockerfile
+│   ├── .dockerignore
 │   ├── alembic.ini
 │   └── pyproject.toml
 ├── frontend/                前端源码（Vue 3 + Vite）
@@ -92,11 +96,19 @@ kg-qa-ie 提供「材料入库 → 结构化抽取 → 混合检索 → 问答/�
 │   ├── nginx.conf
 │   ├── vite.config.js
 │   └── package.json
-├── incremental/             生产环境增量改动源码（覆盖到 backend/app 对应目录）
-├── nginx/default.conf       nginx 站点配置（TLS + 反代）
+├── deploy/                  部署配置（compose 变体 + nginx 站点配置）
+│   ├── docker-compose.yml / docker-compose.deploy.yml / *.prod.yml / *.smoke.yml
+│   ├── nginx/               默认 / HTTPS / 生产 nginx 配置
+│   └── nginx-default.conf
+├── docs/                    设计、改造、运维与交接文档
+├── incremental/             生产环境历史增量改动源码（参考用，已并入 backend/）
+├── nginx/default.conf       生产站点 nginx 配置（TLS + 反代）
 ├── tools/                   运维与批处理脚本
-└── docker-compose.yml
+├── .env.example             环境变量模板（全占位）
+├── start.bat / stop.bat     Windows 本地一键启停
+└── docker-compose.yml       生产编排（mysql / neo4j / chroma / backend / frontend / nginx）
 ```
+
 
 ## 快速开始
 
@@ -110,17 +122,31 @@ npm run dev        # Vite 默认 http://localhost:5180/5181
 
 `vite.config.js` 已把 `/api` 代理到 `http://127.0.0.1:8000`（可用环境变量覆盖），所以本地同时起后端即可联调；生产环境由 nginx 托管 `dist`。
 
-### 后端与整栈
+### 后端本地开发
 
 ```bash
-# 1) 准备后端镜像（本仓库不含生产镜像，需自行构建）
-docker build -t kgqa-backend:latest backend/      # 需自备 Dockerfile，可参考 backend/pyproject.toml 依赖
+cd backend
+python -m venv .venv && . .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install -e .                                  # 依赖见 pyproject.toml
+cp ../.env.example .env                           # 改成自己的连接串/密钥
+alembic upgrade head
+uvicorn app.main:app --reload --port 8000
+pytest                                            # 可选：跑测试
+```
+
+### 整栈（Docker Compose）
+
+```bash
+# 1) 构建后端镜像（仓库已含 backend/Dockerfile）
+docker build -t kgqa-backend:latest backend/
 
 # 2) 修改 docker-compose.yml 中所有 CHANGE_ME
 #    MYSQL_PASSWORD / MYSQL_ROOT_PASSWORD / NEO4J_AUTH / NEO4J_PASSWORD / APP_SECRET_KEY / JWT_SECRET
 
 # 3) 启动
 docker compose up -d
+
+# 前端也可用镜像方式：cd frontend && docker build -t kgqa-frontend:latest .
 ```
 
 - 站点：`https://<你的域名>/`，健康检查 `GET /health` → `{"status":"ok","service":"kg-qa-ie"}`
@@ -153,12 +179,12 @@ docker compose up -d
 
 ## 说明
 
-本仓库是知识库门户生产部署版本的源码快照：
+本仓库是知识库门户的完整源码（含前后端、部署配置与文档），并保留了生产环境相关的运维材料：
 
-- `backend/` 为线上运行镜像中的后端源码；生产镜像的 Dockerfile 未随仓库提供。
-- `frontend/` 为门户前端 Vue 3 源码（构建产物不在仓库内）；生产环境由 nginx 托管 `npm run build` 后的 `dist`。
-- `incremental/` 为生产环境后续叠加的增量改动，覆盖到 `backend/app/` 对应目录即可。
-- 数据目录、数据库导出、TLS 证书、备份包与真实凭据均已排除；`docker-compose.yml` 与 `config.py` 中敏感值已替换为 `CHANGE_ME`。
+- `backend/`：后端完整源码，含 `Dockerfile`、`migrations/`、`scripts/`、`tests/`，可直接本地运行或构建镜像。
+- `frontend/`：门户前端 Vue 3 源码，本地 `npm run dev` 可联调，生产由 nginx 托管 `npm run build` 产物。
+- `deploy/`：多种 compose 编排与 nginx 配置；`docs/`：设计与运维文档；`tools/`、`incremental/`：生产环境历史运维脚本与增量补丁（参考用）。
+- 数据目录、数据库导出、TLS 证书、备份包与真实凭据均已排除；`docker-compose.yml`、`deploy/*`、`config.py`、`.env.example` 中的敏感值统一替换为 `CHANGE_ME`。
 
 ## 许可证
 

@@ -1,0 +1,16 @@
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.venv
+venv
+.coverage
+htmlcov
+data/wiki/*
+data/chroma/*
+data/cache/*
+!data/wiki/.gitkeep
+tests
+.env
+.env.local

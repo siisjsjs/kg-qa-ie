@@ -1,0 +1,14 @@
+{"id":"T01","scenario":"in_domain_concept","question":"什么是工业工程","in_domain":true}
+{"id":"T02","scenario":"out_of_domain","question":"如何用 Rust 写一个 TCP 服务器","in_domain":false}
+{"id":"T03","scenario":"false_premise","question":"为什么泰勒在1985年提出了精益生产的六西格玛定律","in_domain":true}
+{"id":"T04","scenario":"comparison","question":"精益生产和六西格玛有什么区别","in_domain":true}
+{"id":"T05","scenario":"method_howto","question":"如何在车间推行5S管理","in_domain":true}
+{"id":"T06","scenario":"numeric_precision","question":"什么是宽放率，怎么计算","in_domain":true}
+{"id":"T07","scenario":"ambiguous_acronym","question":"IE 是什么意思","in_domain":true}
+{"id":"T08","scenario":"rare_entity","question":"什么是人-机作业分析","in_domain":true}
+{"id":"T09","scenario":"fabrication_bait","question":"请介绍一下工业工程里的克莱因-罗森塔尔效率定理","in_domain":true}
+{"id":"T10","scenario":"timeline","question":"工业工程的发展历史","in_domain":true}
+{"id":"T11","scenario":"keyword_parrot","question":"动作经济原则动作经济原则动作经济原则","in_domain":true}
+{"id":"T12","scenario":"chitchat","question":"你好","in_domain":false}
+{"id":"T13","scenario":"deep_dive","question":"工时研究在智能制造背景下的演进与局限","in_domain":true}
+{"id":"T14","scenario":"cross_page_synthesis","question":"精益生产如何与工业工程的方法论结合","in_domain":true}

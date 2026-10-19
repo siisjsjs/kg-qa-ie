@@ -40,7 +40,7 @@ _existing_url = config.get_main_option("sqlalchemy.url") or ""
 _x_args = context.get_x_argument(as_dictionary=True)
 if "url" in _x_args:
     config.set_main_option("sqlalchemy.url", _x_args["url"])
-elif not _existing_url or _existing_url.startswith("mysql+pymysql://kgqa:kgqa@localhost:3306"):
+elif not _existing_url or _existing_url.startswith("mysql+pymysql://kgqa:CHANGE_ME@localhost:3306"):
     # ini 文件保留的占位 URL → 用 settings 覆盖(保持 P1/P2 行为)
     config.set_main_option("sqlalchemy.url", settings.database_url)
 

@@ -82,49 +82,49 @@ def _jaccard(a: list[str], b: list[str]) -> float:
     return len(sa & sb) / max(1, len(sa | sb))
 
 
-
 _GRAPH_MAX_DEGREE = 16
 _GRAPH_MIN_DEGREE = 2
 
 
-def _sparsify_edges(nodes: list[dict], edges: list[dict], *, max_deg: int = _GRAPH_MAX_DEGREE, min_deg: int = _GRAPH_MIN_DEGREE) -> list[dict]:
-    """Keep a visualization backbone so force layouts can space nodes.
-
-    High-weight edges first; both endpoints capped; then restore isolates
-    up to min_deg. Wiki page wikilinks are not modified.
-    """
+def _sparsify_edges(nodes, edges, *, max_deg=None, min_deg=None):
+    """可视化骨干:按权重保留边,两端度数都封顶,再把孤立点补回最少边。"""
+    max_deg = _GRAPH_MAX_DEGREE if max_deg is None else max_deg
+    min_deg = _GRAPH_MIN_DEGREE if min_deg is None else min_deg
     if not edges:
         return edges
-    nids = [n["id"] for n in nodes]
-    ranked = sorted(range(len(edges)), key=lambda i: float(edges[i].get("weight") or 0), reverse=True)
+    ranked = sorted(edges, key=lambda e: float(e.get("weight") or 0.0), reverse=True)
     deg: dict[str, int] = {}
-    keep: set[int] = set()
-    for i in ranked:
-        e = edges[i]
-        s, t = e["source"], e["target"]
+    kept: list[dict] = []
+    leftover: list[dict] = []
+    for e in ranked:
+        s, t = e.get("source"), e.get("target")
+        if s is None or t is None or s == t:
+            continue
         if deg.get(s, 0) < max_deg and deg.get(t, 0) < max_deg:
-            keep.add(i)
+            kept.append(e)
             deg[s] = deg.get(s, 0) + 1
             deg[t] = deg.get(t, 0) + 1
-    incident: dict[str, list[tuple[float, int, str]]] = {}
-    for i, e in enumerate(edges):
-        w = float(e.get("weight") or 0)
-        incident.setdefault(e["source"], []).append((w, i, e["target"]))
-        incident.setdefault(e["target"], []).append((w, i, e["source"]))
-    for nid in nids:
+        else:
+            leftover.append(e)
+    node_ids = [n.get("id") for n in nodes if n.get("id")]
+    for nid in node_ids:
         if deg.get(nid, 0) >= min_deg:
             continue
-        for _, i, other in sorted(incident.get(nid, []), reverse=True):
-            if i in keep:
+        for e in leftover:
+            s, t = e.get("source"), e.get("target")
+            other = t if s == nid else s if t == nid else None
+            if other is None:
                 continue
-            if deg.get(nid, 0) >= min_deg:
-                break
             if deg.get(other, 0) >= max_deg + 4:
                 continue
-            keep.add(i)
-            deg[nid] = deg.get(nid, 0) + 1
-            deg[other] = deg.get(other, 0) + 1
-    return [edges[i] for i in sorted(keep)]
+            kept.append(e)
+            leftover.remove(e)
+            deg[s] = deg.get(s, 0) + 1
+            deg[t] = deg.get(t, 0) + 1
+            if deg.get(nid, 0) >= min_deg:
+                break
+    return kept
+
 
 def _flatten_strs(value) -> list[str]:
     """把 frontmatter 里的 tags / domains 规整成 list[str]。

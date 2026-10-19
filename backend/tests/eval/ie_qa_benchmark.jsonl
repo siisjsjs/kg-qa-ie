@@ -1,0 +1,10 @@
+{"id":"ie-001","question":"5S管理包括哪些内容？","expected_sources":["5S管理","5S管理的实施方法与工具"],"expected_section_keywords":["整理","整顿","清扫"]}
+{"id":"ie-002","question":"DMAIC的五个阶段是什么？","expected_sources":["DMAIC","六西格玛管理理念与DMAIC流程"],"expected_section_keywords":["定义","测量","分析","改进","控制"]}
+{"id":"ie-003","question":"价值流图应该怎样实施？","expected_sources":["价值流图分析方法与实施步骤"],"expected_section_keywords":["步骤","当前状态","未来状态"]}
+{"id":"ie-004","question":"TPM实施有哪些步骤？","expected_sources":["TPM实施12步骤"],"expected_section_keywords":["步骤"]}
+{"id":"ie-005","question":"什么是ECRS四原则？","expected_sources":["ECRS四原则"],"expected_section_keywords":["取消","合并","重排","简化"]}
+{"id":"ie-006","question":"人机作业分析怎么做？","expected_sources":["人-机作业分析方法与案例"],"expected_section_keywords":["人","机","作业"]}
+{"id":"ie-007","question":"标准作业与5S管理有什么联系？","expected_sources":["5S管理与作业标准化"],"expected_section_keywords":["标准化"]}
+{"id":"ie-008","question":"全面生产维护的八大支柱有哪些？","expected_sources":["TPM的八大支柱","全面生产维护（TPM）"],"expected_section_keywords":["支柱"]}
+{"id":"ie-009","question":"六西格玛管理如何使用DMAIC？","expected_sources":["六西格玛管理理念与DMAIC流程","DMAIC"],"expected_section_keywords":["流程"]}
+{"id":"ie-010","question":"价值流图如何识别浪费？","expected_sources":["价值流图在识别浪费与改善效果方面的作用"],"expected_section_keywords":["浪费","改善"]}

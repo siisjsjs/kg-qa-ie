@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     app_config_encryption_key: str = ""  # base64 fernet key；为空则启用占位实现
 
     # ===== MySQL =====
-    database_url: str = "mysql+pymysql://kgqa:kgqa@localhost:3306/kg_qa_ie?charset=utf8mb4"
+    database_url: str = "mysql+pymysql://kgqa:CHANGE_ME@localhost:3306/kg_qa_ie?charset=utf8mb4"
     db_pool_size: int = 10
     db_max_overflow: int = 20
 

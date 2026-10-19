@@ -18,7 +18,7 @@ from app.core.exceptions import ProviderError
 from app.services.admin import config_store
 from app.services.tools.base import Tool, breaker
 
-DEFAULT_ZHIHUITU_BASE = "https://www.draw.example.com"
+DEFAULT_ZHIHUITU_BASE = "https://draw.example.com"
 _CACHE_TTL_SECONDS = 600.0
 # (取回时刻, base_url, 模板列表)
 _TEMPLATE_CACHE: dict[str, tuple[float, list[dict]]] = {}

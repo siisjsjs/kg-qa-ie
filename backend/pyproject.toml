@@ -29,7 +29,7 @@ dependencies = [
 
     # ===== 图库 / 向量库 =====
     "neo4j>=5.24.0",
-    "chromadb>=0.5.15",
+    "chromadb==0.5.15",
 
     # ===== Markdown / Wiki =====
     "python-frontmatter>=1.1.0",
@@ -56,6 +56,7 @@ dependencies = [
     # ===== 工具 =====
     "orjson>=3.10.7",
     "python-slugify>=8.0.4",
+    "json-repair>=0.60.0",
 ]
 
 [project.optional-dependencies]
