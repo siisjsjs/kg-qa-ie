@@ -96,16 +96,9 @@ kg-qa-ie 提供「材料入库 → 结构化抽取 → 混合检索 → 问答/�
 │   ├── nginx.conf
 │   ├── vite.config.js
 │   └── package.json
-├── deploy/                  部署配置（compose 变体 + nginx 站点配置）
-│   ├── docker-compose.yml / docker-compose.deploy.yml / *.prod.yml / *.smoke.yml
-│   ├── nginx/               默认 / HTTPS / 生产 nginx 配置
-│   └── nginx-default.conf
-├── docs/                    设计、改造、运维与交接文档
-├── incremental/             生产环境历史增量改动源码（参考用，已并入 backend/）
-├── nginx/default.conf       生产站点 nginx 配置（TLS + 反代）
-├── tools/                   运维与批处理脚本
+├── docs/                    设计、改造与运维文档
+├── nginx/default.conf       站点 nginx 配置（TLS + 反代）
 ├── .env.example             环境变量模板（全占位）
-├── start.bat / stop.bat     Windows 本地一键启停
 └── docker-compose.yml       生产编排（mysql / neo4j / chroma / backend / frontend / nginx）
 ```
 
@@ -183,8 +176,9 @@ docker compose up -d
 
 - `backend/`：后端完整源码，含 `Dockerfile`、`migrations/`、`scripts/`、`tests/`，可直接本地运行或构建镜像。
 - `frontend/`：门户前端 Vue 3 源码，本地 `npm run dev` 可联调，生产由 nginx 托管 `npm run build` 产物。
-- `deploy/`：多种 compose 编排与 nginx 配置；`docs/`：设计与运维文档；`tools/`、`incremental/`：生产环境历史运维脚本与增量补丁（参考用）。
-- 数据目录、数据库导出、TLS 证书、备份包与真实凭据均已排除；`docker-compose.yml`、`deploy/*`、`config.py`、`.env.example` 中的敏感值统一替换为 `CHANGE_ME`。
+- `docs/`：设计、改造与运维文档。
+- `docker-compose.yml` + `nginx/default.conf`：生产部署编排与站点配置。
+- 数据目录、数据库导出、TLS 证书、备份包与真实凭据均已排除；`docker-compose.yml`、`nginx/default.conf`、`config.py`、`.env.example` 中的敏感值统一替换为 `CHANGE_ME`。
 
 ## 许可证
 
