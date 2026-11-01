@@ -10,6 +10,8 @@
 
 kg-qa-ie 提供「材料入库 → 结构化抽取 → 混合检索 → 问答/深挖 → 知识图谱」的完整闭环，并带管理后台、会话记录、公告反馈、图表与生图等工具接口。可与智绘图平台（[zhihuitu](https://github.com/siisjsjs/zhihuitu)）通过 SSO 单点登录打通。
 
+> 桌面端集成版：**知绘IE** 把知识库、专业绘图、工时分析与 SOP、TRIZ 创新、生产仿真收进一个 Windows 工作台 —— [github.com/siisjsjs/zhihuie-release](https://github.com/siisjsjs/zhihuie-release)
+
 ## 功能特性
 
 - **知识入库流水线**：上传文档（Markdown/PDF 等）→ 分步抽取（步骤化 LLM pipeline）→ 生成/合并 Wiki 页（材料页、专题页、方法/指标页）→ 校验与门控。
